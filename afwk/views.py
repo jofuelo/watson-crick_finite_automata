@@ -62,6 +62,7 @@ def classify(request):
 	return JsonResponse(data)
 
 def load(text):
+	global reverso, probabilistico, V, compl, K, s0, F, transiciones
 	content = text.split("\n")
 	assert len(content) > 7, "La especificación del autómata tiene que tener por lo menos 6 líneas (Tipo (N/R), Probabilistico (N/P), V, gamma, K, s0, F, delta)"
 	assert content[0].strip() == "N" or content[0].strip() == "R", "El AFWK solo puede ser normal (N) o reverso (R)"
