@@ -183,6 +183,7 @@ def descargar(request):
 
 def analizar(request):
 	global reverso, probabilistico, V, compl, K, s0, F, transiciones
+	print(transiciones)
 	word = request.GET.get('word', None)
 	lower_word = ""
 	for l in word:
