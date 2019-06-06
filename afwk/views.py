@@ -4,15 +4,31 @@ import io
 from base64 import b64decode, b64encode
 from django.http import JsonResponse
 import copy
+from ast import literal_eval
 def index(request):
 	return render(request, 'afwk/index.html', {})
 
 
 def classify(request):
-	global reverso, probabilistico, V, compl, K, s0, F, transiciones
 	if request:
 		reverso, probabilistico, V, compl, K, s0, F, transiciones = load(request.GET.get('text', None))
+		request.session['reverso'] = reverso
+		request.session['probabilistico'] = probabilistico
+		request.session['V'] = str(V)
+		request.session['compl'] = str(compl)
+		request.session['K'] = str(K)
+		request.session['s0'] = str(s0)
+		request.session['F'] = str(F)
 		request.session['transiciones'] = str(transiciones)
+	else:
+		reverso = request.session['reverso']
+		probabilistico = request.session['probabilistico']
+		V = literal_eval(request.session['V'])
+		compl = literal_eval(request.session['compl'])
+		K = literal_eval(request.session['K'])
+		s0 = request.session['s0']
+		F = literal_eval(request.session['F'])
+		transiciones = literal_eval(request.session['transiciones'])
 	stateless = K == [s0] and F == [s0]
 	all_final = len(K) == len(F) and all([k in F for k in K])
 	simple = all([len(t[1]) == 0 or len(t[2]) == 0 for t in transiciones])
@@ -63,7 +79,6 @@ def classify(request):
 	return JsonResponse(data)
 
 def load(text):
-	global reverso, probabilistico, V, compl, K, s0, F, transiciones
 	content = text.split("\n")
 	assert len(content) > 7, "La especificación del autómata tiene que tener por lo menos 6 líneas (Tipo (N/R), Probabilistico (N/P), V, gamma, K, s0, F, delta)"
 	assert content[0].strip() == "N" or content[0].strip() == "R", "El AFWK solo puede ser normal (N) o reverso (R)"
@@ -102,8 +117,14 @@ def load(text):
 
 
 def convertir(request):
-	global reverso, probabilistico, V, compl, K, s0, F, transiciones
-	print(request.session['transiciones'])
+	reverso = request.session['reverso']
+	probabilistico = request.session['probabilistico']
+	V = literal_eval(request.session['V'])
+	compl = literal_eval(request.session['compl'])
+	K = literal_eval(request.session['K'])
+	s0 = request.session['s0']
+	F = literal_eval(request.session['F'])
+	transiciones = literal_eval(request.session['transiciones'])
 
 	i = 0
 	nuevoEst = "qaux"
@@ -150,11 +171,24 @@ def convertir(request):
 		K.append(nuevoEst+str(j))
 	
 	transiciones = [[t[0], [t[1]] if t[1] else [], [t[2]] if t[2] else [], t[3]] for t in nuevasTransiciones]
-	if request:
-		return classify(None)
+	request.session['reverso'] = reverso
+	request.session['probabilistico'] = probabilistico
+	request.session['V'] = str(V)
+	request.session['compl'] = str(compl)
+	request.session['K'] = str(K)
+	request.session['s0'] = str(s0)
+	request.session['F'] = str(F)
+	request.session['transiciones'] = str(transiciones)
 
 def descargar(request):
-	global reverso, probabilistico, V, compl, K, s0, F, transiciones
+	reverso = request.session['reverso']
+	probabilistico = request.session['probabilistico']
+	V = literal_eval(request.session['V'])
+	compl = literal_eval(request.session['compl'])
+	K = literal_eval(request.session['K'])
+	s0 = request.session['s0']
+	F = literal_eval(request.session['F'])
+	transiciones = literal_eval(request.session['transiciones'])
 	outname = request.GET.get('filename', None)
 	with open(outname, "w") as f:
 		f.write(("R" if reverso else "N") + "\n")
@@ -183,7 +217,14 @@ def descargar(request):
 		return response
 
 def analizar(request):
-	global reverso, probabilistico, V, compl, K, s0, F, transiciones
+	reverso = request.session['reverso']
+	probabilistico = request.session['probabilistico']
+	V = literal_eval(request.session['V'])
+	compl = literal_eval(request.session['compl'])
+	K = literal_eval(request.session['K'])
+	s0 = request.session['s0']
+	F = literal_eval(request.session['F'])
+	transiciones = literal_eval(request.session['transiciones'])
 	print(transiciones)
 	word = request.GET.get('word', None)
 	lower_word = ""
