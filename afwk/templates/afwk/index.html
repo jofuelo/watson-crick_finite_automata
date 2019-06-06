@@ -1,0 +1,107 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="{% static "js/index.js" %}"></script>
+<title>Análisis AFWK</title>
+
+<body>
+    <section>
+        <h1>Análisis de Autómatas Finitos de Watson-Crick</h1>
+        <hr>
+        <div class="mitad">
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <span class="btn btn-primary btn-file">
+                        Cargar AFWK...<input type="file" single>
+                    </span>
+                </span>
+                <input type="text" class="form-control" id="filename" readonly>
+            </div>
+            <br>
+            <p><span id="tipo"></span><span id="stateless"></span><span id="all_final"></span><span
+                    id="simple"></span><span id="limitado"></span></p>
+            <p><span id="reverso"></span></p>
+            <p><span id="probabilistico"></span></p>
+            <table id="afwk">
+                <tbody>
+                    <tr>
+                        <td colspan="2">
+                            <p id="V"></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <p id="compl"></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <p id="K"></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <p id="s0"></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <p id="F"></p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <br>
+            <span id="limitadoBtn" class="btn btn-primary btn-file hidden">
+                Convertir a 1-limitado
+            </span>
+            <span id="descargarBtn" class="btn btn-success btn-file hidden">
+                Descargar AFWK
+            </span>
+        </div>
+        <div class="mitad">
+            <div class="input-group hidden" id="wordInput">
+                <span class="input-group-btn">
+                    <span class="font">
+                        Palabra:
+                    </span>
+                </span>
+                <input id="word" type="text" class="form-control">
+            </div>
+            <br>
+            <table id="analisisTable">
+                <tbody>
+                    <tr><td colspan="2"><p id="aceptada"></p></td></tr>
+                    <tr>
+                        <td width="40%" rowspan="2" style="vertical-align: top;" id="secuenciaTd" class="hidden">
+                                <h3>Traza transiciones:</h3>
+                                <div id="secuencia"></div>
+                        </td>
+                        <td width="60%" id="sliderTd" class="hidden" style="vertical-align: top;">
+                            <h3>Traza AFWK:</h3>
+                            <div class="slidecontainer">
+                                <input type="range" min="0" max="5" value="2" class="slider" id="myRange">
+                                <span id="pasosSliderMark"></span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr style="height: 100%">
+                        <td width="60%" id="trazaAfwktd" style="vertical-align: top;">
+                            <table id="trazaAfwk" class="hidden">
+                                <tbody>
+                                    <tr id="flechaSup"></tr>
+                                    <tr id="hebraSup"><td rowspan=2 class="estado">q0</td><td></td></tr>
+                                    <tr id="hebraInf"><td></td></tr>
+                                    <tr id="flechaInf"></tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div id="trellis"></div>
+        </div>
+    </section>
+</body>

@@ -1,0 +1,160 @@
+body{
+	font-family: sans-serif;
+	background-color: #6699CC !important;
+	padding: 2%;
+}
+
+section{
+	padding: 20px;
+	border-radius: 2px;
+	background-color: #EAEAEA;
+}
+
+hr{
+	border-color: black !important;
+}
+
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  background: red;
+  cursor: inherit;
+  display: block;
+}
+input[readonly] {
+  background-color: white !important;
+  cursor: text !important;
+}
+
+.mitad{
+  vertical-align: top;
+  display: inline-block
+}
+.mitad:first-of-type{
+  width: 39.5%;
+  padding-right: 2%; 
+}
+.mitad:last-of-type{
+  width: 59.5%;
+  padding-left: 2%; 
+}
+
+.tablaTransicion{
+    display: inline-block;
+    vertical-align: top;
+}
+
+.par{
+  vertical-align: middle;
+  font-size: 30;
+  font-stretch: ultra-condensed
+}
+
+.par2{
+  vertical-align: middle;
+  font-size: 26;
+  font-stretch: ultra-condensed
+}
+
+.middle{
+  vertical-align: middle;
+}
+
+.transicion > td:first-of-type{
+  padding-right: 25px;
+}
+.transicion > td{
+  padding-bottom: 5px;
+}
+
+.font{
+  font-size: 14px;
+}
+
+
+.slidecontainer {
+  width: 100%; /* Width of the outside container */
+  position: relative;
+}
+
+/* The slider itself */
+.slider {
+  -webkit-appearance: none;  /* Override default CSS styles */
+  appearance: none;
+  width: 100%; /* Full-width */
+  height: 25px; /* Specified height */
+  background: #d3d3d3; /* Grey background */
+  outline: none; /* Remove outline */
+  opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+  -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+  transition: opacity .2s;
+}
+
+/* Mouse-over effects */
+.slider:hover {
+  opacity: 1; /* Fully shown on mouse-over */
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */ 
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  width: 25px; /* Set a specific slider handle width */
+  height: 25px; /* Slider handle height */
+  background: #6699CC; /* Green background */
+  cursor: pointer; /* Cursor on hover */
+}
+
+.slider::-moz-range-thumb {
+  width: 25px; /* Set a specific slider handle width */
+  height: 25px; /* Slider handle height */
+  background: #6699CC; /* Green background */
+  cursor: pointer; /* Cursor on hover */
+}
+
+#pasosSliderMark{
+  position: absolute;
+  top:4;
+  pointer-events: none;
+}
+
+#analisisTable{
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  display: table;
+  table-layout: auto;
+}
+
+.trazatd{
+  font-size: x-large;
+  border: 1px solid black;
+  padding: 10px 15px;
+}
+
+.trazatdF{
+  font-size: x-large;
+  padding: 10px 15px;
+}
+
+.estado{
+  font-size: xx-large;
+  border: 1px solid black;
+  padding: 10px 15px;
+ 
+}
+
+#trazaAfwktd{
+  vertical-align: top;
+  
+}
