@@ -179,6 +179,7 @@ def convertir(request):
 	request.session['s0'] = str(s0)
 	request.session['F'] = str(F)
 	request.session['transiciones'] = str(transiciones)
+	return classify(None)
 
 def descargar(request):
 	reverso = request.session['reverso']
