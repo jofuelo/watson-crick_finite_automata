@@ -9,8 +9,8 @@ def index(request):
 	return render(request, 'afwk/index.html', {})
 
 
-def classify(request):
-	if request:
+def classify(request, cargar=True):
+	if cargar:
 		reverso, probabilistico, V, compl, K, s0, F, transiciones = load(request.GET.get('text', None))
 		request.session['reverso'] = reverso
 		request.session['probabilistico'] = probabilistico
@@ -179,7 +179,7 @@ def convertir(request):
 	request.session['s0'] = str(s0)
 	request.session['F'] = str(F)
 	request.session['transiciones'] = str(transiciones)
-	return classify(None)
+	return classify(request, False)
 
 def descargar(request):
 	reverso = request.session['reverso']
