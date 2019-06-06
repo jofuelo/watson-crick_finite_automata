@@ -12,6 +12,7 @@ def classify(request):
 	global reverso, probabilistico, V, compl, K, s0, F, transiciones
 	if request:
 		reverso, probabilistico, V, compl, K, s0, F, transiciones = load(request.GET.get('text', None))
+		request.session['transiciones'] = str(transiciones)
 	stateless = K == [s0] and F == [s0]
 	all_final = len(K) == len(F) and all([k in F for k in K])
 	simple = all([len(t[1]) == 0 or len(t[2]) == 0 for t in transiciones])
@@ -97,12 +98,12 @@ def load(text):
 			sd = [tuple([s, 1]) for s in sd]
 		assert all([s[0] in K for s in sd]), "Alguno de los estados destino de la transición (" + content[i].strip() + ") no pertenece a K"
 		transiciones.append([so, hs, hi, sd])
-		
 	return tipo == "R", probabilistico == "P", V, compl, K, s0, F, transiciones
 
 
 def convertir(request):
 	global reverso, probabilistico, V, compl, K, s0, F, transiciones
+	print(request.session['transiciones'])
 
 	i = 0
 	nuevoEst = "qaux"
