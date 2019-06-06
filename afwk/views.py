@@ -153,7 +153,6 @@ def convertir(request):
 
 def descargar(request):
 	global reverso, probabilistico, V, compl, K, s0, F, transiciones
-	print(request)
 	outname = request.GET.get('filename', None)
 	with open(outname, "w") as f:
 		f.write(("R" if reverso else "N") + "\n")
@@ -260,6 +259,4 @@ def analizar(request):
 		'reverso': reverso,
 		'trellis': trellis
 	}
-	for t in trellis:
-		print(t)
 	return JsonResponse(data)
