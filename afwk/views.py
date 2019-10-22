@@ -11,7 +11,11 @@ def index(request):
 
 def classify(request, cargar=True):
 	if cargar:
-		reverso, probabilistico, V, compl, K, s0, F, transiciones = load(request.GET.get('text', None))
+		res = load(request.GET.get('text', None))
+		if not res[0]:
+			data = {'error': res[1]}
+			return JsonResponse(data)
+		reverso, probabilistico, V, compl, K, s0, F, transiciones = res[1:]
 		request.session['reverso'] = reverso
 		request.session['probabilistico'] = probabilistico
 		request.session['V'] = str(V)
@@ -74,46 +78,59 @@ def classify(request, cargar=True):
 		'F': str(F).replace("[", "{").replace("]", "}").replace("'", ""),
 		"rev": reverso,
 		"prob": probabilistico,
-		"transiciones": transText
+		"transiciones": transText,
+		'error': ""
 	}
 	return JsonResponse(data)
 
 def load(text):
 	content = text.split("\n")
-	assert len(content) > 7, "La especificación del autómata tiene que tener por lo menos 6 líneas (Tipo (N/R), Probabilistico (N/P), V, gamma, K, s0, F, delta)"
-	assert content[0].strip() == "N" or content[0].strip() == "R", "El AFWK solo puede ser normal (N) o reverso (R)"
+	if len(content) <= 7:
+		return False, "La especificación del autómata tiene que tener por lo menos 6 líneas (Tipo (N/R), Probabilistico (N/P), V, gamma, K, s0, F, delta)"
+	if content[0].strip() != "N" and content[0].strip() != "R":
+		return "El AFWK solo puede ser normal (N) o reverso (R)"
 	tipo = content[0].strip()
-	assert content[1].strip() == "N" or content[1].strip() == "P", "El AFWK solo puede ser normal (N) o probabilístico (P)"
+	if content[1].strip() != "N" and content[1].strip() != "P":
+		return False, "El AFWK solo puede ser normal (N) o probabilístico (P)"
 	probabilistico = content[1].strip()
 	V = content[2].strip().replace(" ", "").split(",")
 	compl = [c.split(",") for c in content[3].strip().replace(" ", "").split(";")]
-	assert set([c[0] for c in compl] + [c[1] for c in compl]) == set(V), "La función de complementariedad tiene que especificar 1 complementario para cada símbolo de V"
+	if set([c[0] for c in compl] + [c[1] for c in compl]) != set(V):
+		return False, "La función de complementariedad tiene que especificar 1 complementario para cada símbolo de V"
 	K = content[4].strip().replace(" ", "").split(",")
 	s0 = content[5].strip().replace(" ", "")
-	assert s0 in K, "El estado inicial debe pertenecer a K"
+	if s0 not in K:
+		return False, "El estado inicial debe pertenecer a K"
 	F = content[6].strip().replace(" ", "").split(",")
-	assert all([f in K for f in F]), "Todos los estados finales deben pertenecer a K"
+	if not all([f in K for f in F]):
+		return False, "Todos los estados finales deben pertenecer a K"
 	transiciones = []
 	for i in range(7, len(content)):
 		if len(content[i].strip()) == 0:
 			continue
 		trans = content[i].strip().split(";")
-		assert len(trans) == 4, "Transición (" + content[i].strip() + ") mal formada"
+		if len(trans) != 4:
+			return False, "Transición (" + content[i].strip() + ") mal formada"
 		so = trans[0].replace(" ", "")
-		assert so in K, "El estado origen de la transición (" + content[i].strip() + ") no pertenece a K"
+		if so not in K:
+			return False, "El estado origen de la transición (" + content[i].strip() + ") no pertenece a K"
 		hs = trans[1].replace(" ", "").split(",") if trans[1] != "" else []
-		assert all([s in V for s in hs]), "Alguno de los símbolos de la hebra superior de la transición (" + content[i].strip() + ") no pertenece a V"
+		if not all([s in V for s in hs]):
+			return False, "Alguno de los símbolos de la hebra superior de la transición (" + content[i].strip() + ") no pertenece a V"
 		hi = trans[2].replace(" ", "").split(",") if trans[2] != "" else []
-		assert all([s in V for s in hi]), "Alguno de los símbolos de la hebra inferior de la transición (" + content[i].strip() + ") no pertenece a V"
+		if not all([s in V for s in hi]):
+			return False, "Alguno de los símbolos de la hebra inferior de la transición (" + content[i].strip() + ") no pertenece a V"
 		sd = trans[3].replace(" ", "").split(",")
 		if probabilistico ==  "P":
 			sd = [tuple(s.split("|")) for s in sd]
-			assert all([len(s)==2 for s in sd]), "Las probabilidades no están bien especificadas en la transición (" + content[i].strip() + ")"
+			if not all([len(s)==2 for s in sd]):
+				return False, "Las probabilidades no están bien especificadas en la transición (" + content[i].strip() + ")"
 		else:
 			sd = [tuple([s, 1]) for s in sd]
-		assert all([s[0] in K for s in sd]), "Alguno de los estados destino de la transición (" + content[i].strip() + ") no pertenece a K"
+		if not all([s[0] in K for s in sd]):
+			return False, "Alguno de los estados destino de la transición (" + content[i].strip() + ") no pertenece a K"
 		transiciones.append([so, hs, hi, sd])
-	return tipo == "R", probabilistico == "P", V, compl, K, s0, F, transiciones
+	return True, tipo == "R", probabilistico == "P", V, compl, K, s0, F, transiciones
 
 
 def convertir(request):

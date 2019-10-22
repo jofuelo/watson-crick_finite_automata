@@ -200,26 +200,47 @@ function update(data) {
     $("#trazaAfwk").addClass("hidden");
   if (!$("#secuenciaTd").hasClass("hidden"))
     $("#secuenciaTd").addClass("hidden");
-  $("#tipo").text("The automata is ");
-  $("#stateless").text((data.stateless ? " " : " non-") + "stateless, ");
-  $("#stateless").attr("class", data.stateless ? "text-success" : "text-danger");
-  $("#all_final").text((data.all_final ? "" : "non-") + "all-final, ");
-  $("#all_final").attr("class", data.all_final ? "text-success" : "text-danger");
-  $("#simple").text((data.simple ? "" : "non-") + "simple, ");
-  $("#simple").attr("class", data.simple ? "text-success" : "text-danger");
-  $("#limitado").text((data.limitado ? "" : "non-") + "1-limited.");
-  $("#limitado").attr("class", data.limitado ? "text-success" : "text-danger");
-  $("#V").text("V = " + data.V);
-  $("#compl").text("γ = " + data.compl);
-  $("#K").text("K = " + data.K);
-  $("#s0").text("s0 = " + data.s0);
-  $("#F").text("F = " + data.F);
-  $("#reverso").text("The automata is " + (data.rev ? "reverse" : "normal") + ".");
-  $("#probabilistico").text("The automata is " + (data.prob ? "probabilistic" : "non-probabilistic") + ".");
-  $(".transicion").remove();
-  $("#afwk").append(data.transiciones);
-  $("#limitadoBtn").removeClass("hidden").attr("disabled", data.limitado);
-  $("#descargarBtn").removeClass("hidden");
-  $("#wordInput").removeClass("hidden");
-  $("#word").attr("disabled", !data.limitado);
+  if(data.error.length > 0){
+    console.log("Errorcillo: "+data.error);
+    $("#tipo").text(data.error);
+    $("#stateless").text("");
+    $("#all_final").text("");
+    $("#simple").text("");
+    $("#limitado").text("");
+    $("#V").text("");
+    $("#compl").text("");
+    $("#K").text("");
+    $("#s0").text("");
+    $("#F").text("");
+    $("#reverso").text("");
+    $("#probabilistico").text("");
+    $(".transicion").remove();
+    $("#limitadoBtn").addClass("hidden")
+    $("#descargarBtn").addClass("hidden");
+    $("#wordInput").addClass("hidden");
+  }
+  else{
+    $("#tipo").text("The automata is ");
+    $("#stateless").text((data.stateless ? " " : " non-") + "stateless, ");
+    $("#stateless").attr("class", data.stateless ? "text-success" : "text-danger");
+    $("#all_final").text((data.all_final ? "" : "non-") + "all-final, ");
+    $("#all_final").attr("class", data.all_final ? "text-success" : "text-danger");
+    $("#simple").text((data.simple ? "" : "non-") + "simple, ");
+    $("#simple").attr("class", data.simple ? "text-success" : "text-danger");
+    $("#limitado").text((data.limitado ? "" : "non-") + "1-limited.");
+    $("#limitado").attr("class", data.limitado ? "text-success" : "text-danger");
+    $("#V").text("V = " + data.V);
+    $("#compl").text("γ = " + data.compl);
+    $("#K").text("K = " + data.K);
+    $("#s0").text("s0 = " + data.s0);
+    $("#F").text("F = " + data.F);
+    $("#reverso").text("The automata is " + (data.rev ? "reverse" : "normal") + ".");
+    $("#probabilistico").text("The automata is " + (data.prob ? "probabilistic" : "non-probabilistic") + ".");
+    $(".transicion").remove();
+    $("#afwk").append(data.transiciones);
+    $("#limitadoBtn").removeClass("hidden").attr("disabled", data.limitado);
+    $("#descargarBtn").removeClass("hidden");
+    $("#wordInput").removeClass("hidden");
+    $("#word").attr("disabled", !data.limitado);
+  }
 }
