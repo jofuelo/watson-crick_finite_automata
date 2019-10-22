@@ -78,7 +78,7 @@ $(document).on('keyup', '#word', function (event) {
       $(".trellisrow").remove()
       $(".trazatd").remove()
       $(".trazatdF").remove()
-      $("#aceptada").text("El AFWK " + (data.acepta ? "sí" : "no") + " acepta la palabra '" + (word.length > 0 ? word : "λ" ) + "'" + (data.probabilistico && data.acepta ? " con una probabilidad máxima de " + data.probabilidad : ""));
+      $("#aceptada").text("The WKFA " + (data.acepta ? "does" : "doesn't") + " accept the word '" + (word.length > 0 ? word : "λ" ) + "'" + (data.probabilistico && data.acepta ? " with a max probability of " + data.probabilidad : ""));
       $("#aceptada").attr("class", data.acepta ? "text-success" : "text-danger");
       if (data.acepta) {
         for (var i = 0; i < data.secuencia.length; i++) {
@@ -200,22 +200,22 @@ function update(data) {
     $("#trazaAfwk").addClass("hidden");
   if (!$("#secuenciaTd").hasClass("hidden"))
     $("#secuenciaTd").addClass("hidden");
-  $("#tipo").text("El autómata es ");
-  $("#stateless").text((data.stateless ? " " : " no ") + "stateless, ");
+  $("#tipo").text("The automata is ");
+  $("#stateless").text((data.stateless ? " " : " non-") + "stateless, ");
   $("#stateless").attr("class", data.stateless ? "text-success" : "text-danger");
-  $("#all_final").text((data.all_final ? "" : "no ") + "all-final, ");
+  $("#all_final").text((data.all_final ? "" : "non-") + "all-final, ");
   $("#all_final").attr("class", data.all_final ? "text-success" : "text-danger");
-  $("#simple").text((data.simple ? "" : "no ") + "simple, ");
+  $("#simple").text((data.simple ? "" : "non-") + "simple, ");
   $("#simple").attr("class", data.simple ? "text-success" : "text-danger");
-  $("#limitado").text((data.limitado ? "" : "no ") + "1-limitado.");
+  $("#limitado").text((data.limitado ? "" : "non-") + "1-limited.");
   $("#limitado").attr("class", data.limitado ? "text-success" : "text-danger");
   $("#V").text("V = " + data.V);
   $("#compl").text("γ = " + data.compl);
   $("#K").text("K = " + data.K);
   $("#s0").text("s0 = " + data.s0);
   $("#F").text("F = " + data.F);
-  $("#reverso").text("El autómata es " + (data.rev ? "reverso" : "normal") + ".");
-  $("#probabilistico").text("El autómata es " + (data.prob ? "probabilístico" : "no probabilístico") + ".");
+  $("#reverso").text("The automata is " + (data.rev ? "reverse" : "normal") + ".");
+  $("#probabilistico").text("The automata is " + (data.prob ? "probabilistic" : "non-probabilistic") + ".");
   $(".transicion").remove();
   $("#afwk").append(data.transiciones);
   $("#limitadoBtn").removeClass("hidden").attr("disabled", data.limitado);

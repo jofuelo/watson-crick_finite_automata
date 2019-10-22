@@ -8,13 +8,13 @@
 
 <body>
     <section>
-        <h1>Análisis de Autómatas Finitos de Watson-Crick</h1>
+        <h1>Watson-Crick Finite Automatas Analysis</h1>
         <hr>
         <div class="mitad">
             <div class="input-group">
                 <span class="input-group-btn">
                     <span class="btn btn-primary btn-file">
-                        Cargar AFWK...<input type="file" single>
+                        Load WKFA...<input type="file" single>
                     </span>
                 </span>
                 <input type="text" class="form-control" id="filename" readonly>
@@ -55,17 +55,17 @@
             </table>
             <br>
             <span id="limitadoBtn" class="btn btn-primary btn-file hidden">
-                Convertir a 1-limitado
+                Converto to 1-limited
             </span>
             <span id="descargarBtn" class="btn btn-success btn-file hidden">
-                Descargar AFWK
+                Download WKFA
             </span>
         </div>
         <div class="mitad">
             <div class="input-group hidden" id="wordInput">
                 <span class="input-group-btn">
                     <span class="font">
-                        Palabra:
+                        Word:
                     </span>
                 </span>
                 <input id="word" type="text" class="form-control">
@@ -76,11 +76,11 @@
                     <tr><td colspan="2"><p id="aceptada"></p></td></tr>
                     <tr>
                         <td width="40%" rowspan="2" style="vertical-align: top;" id="secuenciaTd" class="hidden">
-                                <h3>Traza transiciones:</h3>
+                                <h3>Transition trace:</h3>
                                 <div id="secuencia"></div>
                         </td>
                         <td width="60%" id="sliderTd" class="hidden" style="vertical-align: top;">
-                            <h3>Traza AFWK:</h3>
+                            <h3>WKFA trace:</h3>
                             <div class="slidecontainer">
                                 <input type="range" min="0" max="5" value="2" class="slider" id="myRange">
                                 <span id="pasosSliderMark"></span>
