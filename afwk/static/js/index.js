@@ -43,7 +43,7 @@ $(document).on('change', '.btn-file :file', function (event) {
   const reader = new FileReader()
   reader.onload = function (fileLoadedEvent) {
     var text = fileLoadedEvent.target.result;
-    console.log(text)
+    console.log(fileLoadedEvent.target)
     $.ajax({
       url: 'ajax/classify/',
       data: {
