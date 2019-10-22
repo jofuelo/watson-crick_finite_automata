@@ -62,6 +62,7 @@ $(document).on('change', '.btn-file :file', function (event) {
   else{
     update({"error": "WKFA must be specified in a .txt file"});
   }
+  document.getElementById("fileinput").value = "";
 });
 
 $(document).on('keyup', '#word', function (event) {
