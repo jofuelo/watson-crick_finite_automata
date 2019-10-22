@@ -39,26 +39,29 @@ function changeSlider() {
 $(document).on('change', '.btn-file :file', function (event) {
   var input = $(this);
   label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-  console.log(label)
 
-  const reader = new FileReader()
-  reader.onload = function (fileLoadedEvent) {
-    var text = fileLoadedEvent.target.result;
-    $.ajax({
-      url: 'ajax/classify/',
-      data: {
-        'text': text
-      },
-      error: function(){
-        update({"error": "Bad formed WKFA"})
-      },
-      success: function (data) {
-        update(data);
-      }
-    });
-
-  };
-  reader.readAsText(input.get(0).files[0])
+  if(label.endsWith(".txt"){
+    const reader = new FileReader()
+    reader.onload = function (fileLoadedEvent) {
+      var text = fileLoadedEvent.target.result;
+      $.ajax({
+        url: 'ajax/classify/',
+        data: {
+          'text': text
+        },
+        error: function(){
+          update({"error": "Bad formed WKFA"});
+        },
+        success: function (data) {
+          update(data);
+        }
+      });
+    };
+    reader.readAsText(input.get(0).files[0])
+  }
+  else{
+    update({"error": "WKFA must be specified in a .txt file"});
+  }
 
   var input = $(this).parents('.input-group').find(':text'),
     log = label;

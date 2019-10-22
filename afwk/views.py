@@ -86,49 +86,49 @@ def classify(request, cargar=True):
 def load(text):
 	content = text.split("\n")
 	if len(content) <= 7:
-		return False, "La especificación del autómata tiene que tener por lo menos 6 líneas (Tipo (N/R), Probabilistico (N/P), V, gamma, K, s0, F, delta)"
+		return False, "The specification of the automata must be at least 7 lines long (Type (N/R), Probabilistic (N/P), V, gamma, K, s0, F, delta)"
 	if content[0].strip() != "N" and content[0].strip() != "R":
-		return "El AFWK solo puede ser normal (N) o reverso (R)"
+		return "At line 0: The WKFA can only be normal (N) or reverse (R)"
 	tipo = content[0].strip()
 	if content[1].strip() != "N" and content[1].strip() != "P":
-		return False, "El AFWK solo puede ser normal (N) o probabilístico (P)"
+		return False, "At line 1: The WKFA can only be normal (N) o probabilistic (P)"
 	probabilistico = content[1].strip()
 	V = content[2].strip().replace(" ", "").split(",")
 	compl = [c.split(",") for c in content[3].strip().replace(" ", "").split(";")]
 	if set([c[0] for c in compl] + [c[1] for c in compl]) != set(V):
-		return False, "La función de complementariedad tiene que especificar 1 complementario para cada símbolo de V"
+		return False, "At line 3: The complementarity function has to specify 1 complementary for each symbol of V"
 	K = content[4].strip().replace(" ", "").split(",")
 	s0 = content[5].strip().replace(" ", "")
 	if s0 not in K:
-		return False, "El estado inicial debe pertenecer a K"
+		return False, "At line 5: The initial state must be in K"
 	F = content[6].strip().replace(" ", "").split(",")
 	if not all([f in K for f in F]):
-		return False, "Todos los estados finales deben pertenecer a K"
+		return False, "At line 6: All the final states must be in K"
 	transiciones = []
 	for i in range(7, len(content)):
 		if len(content[i].strip()) == 0:
 			continue
 		trans = content[i].strip().split(";")
 		if len(trans) != 4:
-			return False, "Transición (" + content[i].strip() + ") mal formada"
+			return False, "At line " + str(i) + ": Transition (" + content[i].strip() + ") bad formed"
 		so = trans[0].replace(" ", "")
 		if so not in K:
-			return False, "El estado origen de la transición (" + content[i].strip() + ") no pertenece a K"
+			return False, "At line " + str(i) + ": The origin state of transition (" + content[i].strip() + ") doesn't belong to K"
 		hs = trans[1].replace(" ", "").split(",") if trans[1] != "" else []
 		if not all([s in V for s in hs]):
-			return False, "Alguno de los símbolos de la hebra superior de la transición (" + content[i].strip() + ") no pertenece a V"
+			return False, "At line " + str(i) + ": Some of the symbols of the upper strand in transition (" + content[i].strip() + ") don't belong to V"
 		hi = trans[2].replace(" ", "").split(",") if trans[2] != "" else []
 		if not all([s in V for s in hi]):
-			return False, "Alguno de los símbolos de la hebra inferior de la transición (" + content[i].strip() + ") no pertenece a V"
+			return False, "At line " + str(i) + ": Some of the symbols of the lower strand in transition (" + content[i].strip() + ") don't belong to V"
 		sd = trans[3].replace(" ", "").split(",")
 		if probabilistico ==  "P":
 			sd = [tuple(s.split("|")) for s in sd]
 			if not all([len(s)==2 for s in sd]):
-				return False, "Las probabilidades no están bien especificadas en la transición (" + content[i].strip() + ")"
+				return False, "At line " + str(i) + ": The probabilities aren't well specified in transition (" + content[i].strip() + ")"
 		else:
 			sd = [tuple([s, 1]) for s in sd]
 		if not all([s[0] in K for s in sd]):
-			return False, "Alguno de los estados destino de la transición (" + content[i].strip() + ") no pertenece a K"
+			return False, "At line " + str(i) + ": Some of the destination states of transition (" + content[i].strip() + ") don't belong to K"
 		transiciones.append([so, hs, hi, sd])
 	return True, tipo == "R", probabilistico == "P", V, compl, K, s0, F, transiciones
 
