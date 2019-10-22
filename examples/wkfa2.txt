@@ -1,0 +1,15 @@
+N
+N
+a,b,c
+a,a;b,b;c,c
+s0,qa,qb,qc,qf
+s0
+qf
+s0;a;;qa
+qa;a;;qa
+qa;b;a;qb
+qb;b;a;qb
+qb;c;b;qc
+qc;c;b;qc
+qc;;c;qf
+qf;;c;qf

@@ -6,7 +6,7 @@ from django.http import JsonResponse
 import copy
 from ast import literal_eval
 def index(request):
-	return render(request, 'afwk/index.html', {})
+	return render(request, 'wkfa/index.html', {})
 
 
 def classify(request, cargar=True):

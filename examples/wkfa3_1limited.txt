@@ -1,0 +1,15 @@
+R
+N
+a,b
+a,a;b,b
+q0,q1,qaux0,qaux1,qaux2,qaux3
+q0
+q0
+qaux0;;a;q1
+qaux1;;b;q1
+qaux2;;a;q0
+qaux3;;b;q0
+q0;b;;qaux1
+q0;a;;qaux0
+q1;b;;qaux3
+q1;a;;qaux2
