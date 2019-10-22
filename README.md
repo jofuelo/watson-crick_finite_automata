@@ -1,4 +1,4 @@
-# watson-crick_finite_automata
+# Watson-Crick Finite Automata analysis module
 
 This is a web app to easily make analysis of Watson-Crick Finite automatas.
 
