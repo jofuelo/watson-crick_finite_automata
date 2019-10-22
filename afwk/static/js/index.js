@@ -43,10 +43,14 @@ $(document).on('change', '.btn-file :file', function (event) {
   const reader = new FileReader()
   reader.onload = function (fileLoadedEvent) {
     var text = fileLoadedEvent.target.result;
+    console.log(text)
     $.ajax({
       url: 'ajax/classify/',
       data: {
         'text': text
+      },
+      error: function(){
+        update({"error": "Bad formed WKFA"})
       },
       success: function (data) {
         update(data);
