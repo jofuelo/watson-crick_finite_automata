@@ -88,7 +88,7 @@ def load(text):
 	if len(content) <= 7:
 		return False, "The specification of the automata must be at least 7 lines long (Type (N/R), Probabilistic (N/P), V, gamma, K, s0, F, delta)"
 	if content[0].strip() != "N" and content[0].strip() != "R":
-		return "At line 0: The WKFA can only be normal (N) or reverse (R)"
+		return False, "At line 0: The WKFA can only be normal (N) or reverse (R)"
 	tipo = content[0].strip()
 	if content[1].strip() != "N" and content[1].strip() != "P":
 		return False, "At line 1: The WKFA can only be normal (N) o probabilistic (P)"
