@@ -39,11 +39,11 @@ function changeSlider() {
 $(document).on('change', '.btn-file :file', function (event) {
   var input = $(this);
   label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+  console.log(label)
 
   const reader = new FileReader()
   reader.onload = function (fileLoadedEvent) {
     var text = fileLoadedEvent.target.result;
-    console.log(fileLoadedEvent.target)
     $.ajax({
       url: 'ajax/classify/',
       data: {
