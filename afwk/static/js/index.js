@@ -62,6 +62,15 @@ $(document).on('change', '.btn-file :file', function (event) {
   else{
     update({"error": "WKFA must be specified in a .txt file"});
   }
+
+  var input = $(this).parents('.input-group').find(':text'),
+    log = label;
+
+  if (input.length) {
+    input.val(log);
+  } else {
+    if (log) alert(log);
+  }
   document.getElementById("fileinput").value = "";
 });
 
