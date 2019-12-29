@@ -16,5 +16,5 @@ The specification of the WKFA must be in a txt file and it's organized in at lea
   - The fifth line contains the list of states of the automata, separated by commas, e.g. "qa,qb,qbb,qc,qf"
   - The sixth line has the initial state. It has to be one of the states listed above.
   - The seventh line has the list of final states, separated by commas. They have to be in the list of states.
-  - From the eighth line onwards, each line contains a transition, written as "<origin state>;<symbols of upper strand separated by commas>;<symbols of lower strand separated by commas>;<destinarion state>". E.g. "qa;a;;qa".
+  - From the eighth line onwards, each line contains a transition, written as "`<origin state>`;`<symbols of upper strand separated by commas>`;`<symbols of lower strand separated by commas>`;`<destinarion state`>". E.g. "qa;a;;qa".
     If the automata is probabilistic, the probability of a transition is specified in its line at the end separated from the transition by a vertical bar. E.g. "qa;a;;qa|0.4"
